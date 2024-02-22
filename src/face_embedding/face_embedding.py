@@ -9,7 +9,8 @@ import os
 sys.path.append('../insightface/deploy')
 sys.path.append('../insightface/src/common')
 
-class GenrateFaceEmbedding:
+
+class GenerateFaceEmbedding:
 
     def __init__(self, args):
         self.args = args
@@ -18,52 +19,56 @@ class GenrateFaceEmbedding:
         self.threshold = 1.24
         self.det = 0
 
-    def get_embedding(self):
-        print("[INFO] loading face detector...")
+    def genFaceEmbedding(self):
+        # Grab the paths to the input images in our dataset
+        print("[INFO] quantifying faces...")
         imagePaths = list(paths.list_images(self.args['dataset']))
 
-        # load the face embedding model
+        # Initialize the faces embedder
         embedding_model = face_model.FaceModel(self.image_size, self.model, self.threshold, self.det)
 
-        # initialize our lists of extracted facial embeddings and corresponding people names
+        # Initialize our lists of extracted facial embeddings and corresponding people names
         knownEmbeddings = []
         knownNames = []
 
-        # initialize the total number of faces processed
+        # Initialize the total number of faces processed
         total = 0
 
-        # loop over the image paths
+        # Loop over the imagePaths
         for (i, imagePath) in enumerate(imagePaths):
-            # Extract student name from the image path
+            # extract the person name from the image path
             print("[INFO] processing image {}/{}".format(i + 1, len(imagePaths)))
             name = imagePath.split(os.path.sep)[-2]
 
-            # load image
+            # load the image
             image = cv2.imread(imagePath)
+            # convert face to RGB color
             nimg = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            nimg = np.transpose(nimg, (2,0,1))
-
-            # get the face embedding for the face in the image
+            nimg = np.transpose(nimg, (2, 0, 1))
+            # Get the face embedding vector
             face_embedding = embedding_model.get_feature(nimg)
 
-            # add the name of the person + corresponding face embedding to their respective lists
+            # add the name of the person + corresponding face
+            # embedding to their respective list
             knownNames.append(name)
             knownEmbeddings.append(face_embedding)
             total += 1
 
-        # save the facial embeddings + names to disk
-        print("[INFO] serializing {} encodings...".format(total))
-        # save to output
-        data = {"embeddings": knownEmbeddings, "names": knownNames}
-        f = open(self.args.embeddings, "wb")
-        f.write(pickle.dumps(data))
-        f.close()
+        print(total, " faces embedded")
 
+        # save to output
+        output_dir = os.path.dirname(self.args['embeddings'])
+        os.makedirs(output_dir, exist_ok=True)  # Create the output directory if it doesn't exist
+        data = {"embeddings": knownEmbeddings, "names": knownNames}
+        with open(self.args['embeddings'], "wb") as f:
+            pickle.dump(data, f)
+
+# ...
 
 if __name__ == "__main__":
     args = {
         "dataset": "../data",
-        "embeddings": "../output/embeddings.pickle"
+        "embeddings": "../Models/embeddings.pickle"
     }
-    embedding = GenrateFaceEmbedding(args)
-    embedding.get_embedding()
+    genEmbedding = GenerateFaceEmbedding(args)
+    genEmbedding.genFaceEmbedding()

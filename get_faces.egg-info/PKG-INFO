@@ -1,11 +1,7 @@
-Metadata-Version: 1.2
+Metadata-Version: 2.1
 Name: get-faces
 Version: 0.0.1
 Summary: A small package for faec recognizer
-Home-page: UNKNOWN
 Author: Yash Baravaliya
 Author-email: yashbaravaliya206@gmail.com
-License: UNKNOWN
-Description: UNKNOWN
-Platform: UNKNOWN
 Requires-Python: >=3.6
