@@ -1,8 +1,7 @@
 from keras.layers import Dense, Dropout
 from keras.models import Sequential
 from keras.optimizers import Adam
-from keras.losses import sparse_categorical_crossentropy
-
+import keras
 
 class Architecture():
 
@@ -18,8 +17,8 @@ class Architecture():
         model.add(Dropout(0.5))
         model.add(Dense(self.num_classes,activation='softmax'))
 
-        model.compile(optimizer=Adam(lr=0.001),
-                      loss=sparse_categorical_crossentropy,
+        optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+        model.compile(loss=keras.losses.sparse_categorical_crossentropy,
+                      optimizer=optimizer,
                       metrics=['accuracy'])
-        
         return model

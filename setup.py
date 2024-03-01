@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='get_faces',
+    name='attendace_system',
     version='0.0.1',
     author='Yash Baravaliya',
     author_email='yashbaravaliya206@gmail.com',
