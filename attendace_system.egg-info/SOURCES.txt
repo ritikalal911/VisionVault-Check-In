@@ -1,0 +1,6 @@
+README.md
+setup.py
+attendace_system.egg-info/PKG-INFO
+attendace_system.egg-info/SOURCES.txt
+attendace_system.egg-info/dependency_links.txt
+attendace_system.egg-info/top_level.txt

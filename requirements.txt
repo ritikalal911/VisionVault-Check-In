@@ -1,11 +1,1 @@
-# Core dependencies
-numpy==1.21.0
-imutils==0.5.4
-opencv-python==4.5.3.56
-scikit-learn==0.24.2  
-
-# Face recognition library
-git+https://github.com/deepinsight/insightface.git
-
-### local packages -
--e . 
+-e .
