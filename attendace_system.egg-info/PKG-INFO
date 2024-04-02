@@ -4,4 +4,4 @@ Version: 0.0.1
 Summary: A small package for faec recognizer
 Author: Yash Baravaliya
 Author-email: yashbaravaliya206@gmail.com
-Requires-Python: >=3.9
+Requires-Python: >=3.8
