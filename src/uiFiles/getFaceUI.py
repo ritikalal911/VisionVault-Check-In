@@ -30,7 +30,7 @@ class GetFaceFrame(customtkinter.CTkFrame):
         self.grid_columnconfigure(1, weight=1)
 
         self.camera_label = tk.Label(self, bg="black", width=780, height=680)
-        self.camera_label.grid(row=0, column=0, padx=(20, 20), pady=(20, 20), sticky="nsew")
+        self.camera_label.grid(row=0, column=0, padx=(20, 20), pady=(20, 20), sticky="ew")
 
         Frame = customtkinter.CTkFrame(self)
         Frame.grid(row=0, column=1, padx=(20, 0), pady=(20, 20), sticky="nsew")
@@ -57,8 +57,17 @@ class GetFaceFrame(customtkinter.CTkFrame):
         self.print_output_text = Text(Frame, wrap="word", height=22.4, state="disabled",bg='#343638', fg='white')
         self.print_output_text.grid(row=3, column=0,columnspan=2, pady=(20, 0), sticky="nsew")
 
+        # Initialize the VideoCapture object
+
+        # Set the desired frame width and height
+        frame_width = 640  # Adjust the width as needed
+        frame_height = 580  # Adjust the height as needed
+
 
         self.capture = cv2.VideoCapture(0)
+        # Set the frame width and height
+        self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, frame_width)
+        self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, frame_height)
         self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
         self.detector = dlib.get_frontal_face_detector()
         self.predictor = dlib.shape_predictor(os.path.join("src", "Models", "shape_predictor_68_face_landmarks.dat"))
@@ -109,11 +118,21 @@ class GetFaceFrame(customtkinter.CTkFrame):
                 # Auto-scroll to the bottom
                 self.print_output_text.yview("end")
 
+                # Calculate padding to center the image
+                label_width = self.camera_label.winfo_width()
+                label_height = self.camera_label.winfo_height()
+                image_width = frame.width()
+                image_height = frame.height()
+
+                padx = max((label_width - image_width) // 2, 0)
+                pady = max((label_height - image_height) // 2, 0)
+
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 frame = Image.fromarray(frame)
                 frame = ImageTk.PhotoImage(frame)
                 self.camera_label.configure(image=frame)
                 self.camera_label.image = frame
+                self.camera_label.grid_configure(padx=(padx, padx), pady=(pady, pady))
                 self.update_idletasks()
                 self.update()
                 time.sleep(0.1)
