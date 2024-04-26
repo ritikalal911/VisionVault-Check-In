@@ -54,7 +54,7 @@ To run VisionVault-Check-In locally, follow these steps:
 
 ## Usage
 
-1. Launch the application by running `main.py`.
+1. Launch the application by running `app.py`.
 2. Use the interface to input images for attendance tracking.
 3. Train the system using the provided images.
 4. Once trained, the system can predict attendance based on facial recognition.
