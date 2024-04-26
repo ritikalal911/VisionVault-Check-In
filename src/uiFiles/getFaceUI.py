@@ -28,12 +28,13 @@ class GetFaceFrame(customtkinter.CTkFrame):
 
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
+        self.grid_columnconfigure(2, weight=1)
 
-        self.camera_label = tk.Label(self, bg="black", width=780, height=680)
-        self.camera_label.grid(row=0, column=0, padx=(20, 20), pady=(20, 20), sticky="ew")
+        self.camera_label = tk.Label(self, bg="black")
+        self.camera_label.grid(row=0, column=0,columnspan=2 ,padx=(20, 20), pady=(20, 20), sticky="nsew")
 
         Frame = customtkinter.CTkFrame(self)
-        Frame.grid(row=0, column=1, padx=(20, 0), pady=(20, 20), sticky="nsew")
+        Frame.grid(row=0, column=2, padx=(20, 0), pady=(20, 20), sticky="nsew")
 
         Frame.grid_columnconfigure(0, weight=1)
         Frame.grid_columnconfigure(1, weight=1)
@@ -119,20 +120,20 @@ class GetFaceFrame(customtkinter.CTkFrame):
                 self.print_output_text.yview("end")
 
                 # Calculate padding to center the image
-                label_width = self.camera_label.winfo_width()
-                label_height = self.camera_label.winfo_height()
-                image_width = frame.width()
-                image_height = frame.height()
+                # label_width = self.camera_label.winfo_width()
+                # label_height = self.camera_label.winfo_height()
+                # image_width = frame.width()
+                # image_height = frame.height()
 
-                padx = max((label_width - image_width) // 2, 0)
-                pady = max((label_height - image_height) // 2, 0)
+                # padx = max((label_width - image_width) // 2, 0)
+                # pady = max((label_height - image_height) // 2, 0)
 
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 frame = Image.fromarray(frame)
                 frame = ImageTk.PhotoImage(frame)
                 self.camera_label.configure(image=frame)
                 self.camera_label.image = frame
-                self.camera_label.grid_configure(padx=(padx, padx), pady=(pady, pady))
+                # self.camera_label.grid_configure(padx=(padx, padx), pady=(pady, pady))
                 self.update_idletasks()
                 self.update()
                 time.sleep(0.1)
