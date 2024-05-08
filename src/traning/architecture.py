@@ -1,6 +1,7 @@
 from keras.layers import Dense, Dropout
 from keras.models import Sequential
 from keras.optimizers import Adam
+from keras.regularizers import l2
 import keras
 
 class Architecture():
@@ -11,13 +12,14 @@ class Architecture():
 
     def build_model(self):
         model = Sequential()
-        model.add(Dense(1024,activation='relu',input_shape=self.input_shape))
+        model.add(Dense(1024,activation='relu', kernel_regularizer=l2(0.01),input_shape=self.input_shape))
         model.add(Dropout(0.5))
-        model.add(Dense(1024,activation='relu'))
+        model.add(Dense(512,activation='relu', kernel_regularizer=l2(0.01)))
         model.add(Dropout(0.5))
         model.add(Dense(self.num_classes,activation='softmax'))
 
-        optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+
+        optimizer = keras.optimizers.Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, amsgrad=False)
         model.compile(loss=keras.losses.sparse_categorical_crossentropy,
                       optimizer=optimizer,
                       metrics=['accuracy'])

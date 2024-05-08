@@ -5,10 +5,10 @@ from insightface.app import FaceAnalysis
 
 # Load the buffalo_s model
 face_analysis = FaceAnalysis(name='buffalo_s')
-face_analysis.prepare(ctx_id=0, det_size=(256, 256)) # ctx_id is used for computation type (0 = CPU & 1 = GPU)
+face_analysis.prepare(ctx_id=1, det_size=(256, 256)) # ctx_id is used for computation type (0 = CPU & 1 = GPU)
 
 base_folder = "data" # Path of Dataset
-output_pickle_file = "face_Embedding.pickle"
+output_pickle_file = os.path.join("src", "Models", "embeddings.pickle") # Output pickle file path
 
 embeddings_dict = {} # Empty Dict
 
@@ -33,4 +33,10 @@ for subfolder in os.listdir(base_folder):
     # Store the embeddings for this Subfolder (class)
     embeddings_dict[subfolder] = embeddings
 
-    print("Embedding of", subfolder," is successful.")
+    print("Embedding of", subfolder, "is successful.")
+
+# Save the embeddings dictionary as a pickle file
+with open(output_pickle_file, 'wb') as handle:
+    pickle.dump(embeddings_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+print("Embeddings saved to:", output_pickle_file)

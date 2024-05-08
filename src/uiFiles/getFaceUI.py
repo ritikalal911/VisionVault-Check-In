@@ -31,7 +31,7 @@ class GetFaceFrame(customtkinter.CTkFrame):
         self.grid_columnconfigure(2, weight=1)
 
         self.camera_label = tk.Label(self, bg="black")
-        self.camera_label.grid(row=0, column=0,columnspan=2 ,padx=(20, 20), pady=(20, 20), sticky="nsew")
+        self.camera_label.grid(row=0, column=0,columnspan=2,padx=(20, 20), pady=(20, 20), sticky="nsew")
 
         Frame = customtkinter.CTkFrame(self)
         Frame.grid(row=0, column=2, padx=(20, 0), pady=(20, 20), sticky="nsew")
