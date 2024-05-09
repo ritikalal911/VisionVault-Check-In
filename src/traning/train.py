@@ -3,7 +3,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 import numpy as np
 import pickle
-from architecture import Architecture
+from src.traning.architecture import Architecture
 from keras.callbacks import Callback
 from insightface.app import FaceAnalysis
 from keras.callbacks import EarlyStopping
@@ -15,8 +15,10 @@ class ProgressCallback(Callback):
         self.epochs = epochs
 
     def on_epoch_end(self, epoch, logs=None):
+        epochs = (epoch + 1)/ self.epochs
         print(f"Epoch {epoch + 1}/{self.epochs}")
         print(f"Loss: {logs['loss']}, Acc: {logs['accuracy']}")
+        return logs, epochs
 
 def load_embeddings(embeddings_path):
     with open(embeddings_path, 'rb') as f:
