@@ -7,7 +7,7 @@ setup(
     author_email='yashbaravaliya206@gmail.com',
     packages=["src"],
     description="A small package for faec recognizer",
-    python_requires=">=3.9",
+    python_requires=">=3.8",
     install_requires=[]
 )
     

@@ -1,0 +1,4 @@
+create a conda env:- conda create -n visionVault python==3.8
+conda activate visionVault
+pip install -r requrement.txt
+conda install -c conda-forge dlib
